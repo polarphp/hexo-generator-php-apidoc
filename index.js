@@ -12,7 +12,7 @@ hexo.extend.filter.register("before_generate", function() {
    let get_root_dir = hexo.extend.helper.get("get_root_dir");
    let rootDir = get_root_dir();
    let ideAutoCompleteDir = rootDir+'/pdk-ide-auto-complete';
-   let apigenBin = ideAutoCompleteDir + '/vendor/bin/apigen';
+   let apigenBin = ideAutoCompleteDir + '/apigen/bin/apigen';
    let targetApiDocsDir = get_libpdk_apidoc_saved_dir();
    if (fs.existsSync(targetApiDocsDir)) {
       fs.rmdirSync(targetApiDocsDir);
@@ -20,7 +20,7 @@ hexo.extend.filter.register("before_generate", function() {
    return new Promise(function (resovle, reject)
    {
       // Work with the repository object here.
-      const ls = spawn('php', [apigenBin, 'generate', '-s', "src", '--destination', targetApiDocsDir], {
+      const ls = spawn('php', [apigenBin, 'generate', '--destination', targetApiDocsDir, 'src'], {
          cwd:ideAutoCompleteDir
       });
       ls.stdout.on('data', (data) => {
